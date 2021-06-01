@@ -8,7 +8,10 @@ public class MonsterController : MonoBehaviour
    BlockManager blockManager; 
    bool isGoingToEat=false;
 
-    private void Start() {
+    private void Start() 
+    {
+        tag="Monsters";
+        GetComponent<MeshRenderer>().material.color=Color.red;
         blockManager=GetComponent<BlockManager>();
     }
    private void OnMouseDown()
@@ -17,7 +20,6 @@ public class MonsterController : MonoBehaviour
         if(blockManager.isMonster)
         {
             EnemyMove();
-            
             isGoingToEat=true;
         }
     }
@@ -51,7 +53,6 @@ public class MonsterController : MonoBehaviour
             transform.position=Vector3.Lerp(transform.position,hitObjPos,.1f);
        }
     }
-
    private bool CastRay(Vector3 Direction)
    {
        RaycastHit hit;

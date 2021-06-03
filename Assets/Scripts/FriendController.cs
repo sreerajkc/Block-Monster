@@ -8,11 +8,18 @@ public class FriendController : MonoBehaviour
     void Start()
     {
         tag="Friends";
-        GetComponent<MeshRenderer>().material.color=Color.blue;
+        blockManager=GetComponent<BlockManager>();
     }
 
     private void OnMouseDown() 
     {
+        blockManager.animator.SetTrigger("isDone");
+        StartCoroutine(DisableObject());
+    }
+    IEnumerator DisableObject()
+    {
+        yield return new WaitForSeconds(.8f);
         gameObject.SetActive(false);
     }
+    
 }

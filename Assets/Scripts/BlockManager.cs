@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class BlockManager : MonoBehaviour
 {
-    public bool isMonster;
-    public bool isSelected;
-
-
+    [SerializeField] Texture eyesClosed,Excited,MonsterFace,scaryFace;
+    [SerializeField] GameObject plane;
+    [HideInInspector] public bool isMonster,isEyesOpened=true,isMouseExit=true,isClicked=false;
+    [SerializeField] Color[] colors;
+    [HideInInspector]public Animator animator;
+    Texture eyesOpened;
     private void Start() 
     {
+        GetComponent<MeshRenderer>().material.color=colors[Random.Range(0,colors.Length)];
+        eyesOpened=plane.GetComponent<MeshRenderer>().material.GetTexture("_BaseMap");
+        animator=GetComponent<Animator>();
         if(isMonster)
         {
             gameObject.AddComponent<MonsterController>();
@@ -18,6 +23,53 @@ public class BlockManager : MonoBehaviour
         {
             gameObject.AddComponent<FriendController>();
         }
+        StartCoroutine("Blinking");
     }
-    
+    private void OnMouseEnter() 
+    {
+        animator.SetTrigger("isOver");
+        isMouseExit=false;
+    }
+    private void OnMouseOver() 
+    {
+        if(!isClicked)
+        {
+            plane.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap",Excited);
+        }
+    }
+    private void OnMouseExit()
+    {
+        isMouseExit=true;
+        StartCoroutine("Blinking");
+    }
+    public IEnumerator Blinking()
+    {
+        if(isMouseExit && !isClicked)
+        {
+            if(isEyesOpened)
+            {
+                yield return new WaitForSeconds(Random.Range(1,5));
+                plane.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap",eyesClosed);
+                isEyesOpened=false;
+                StartCoroutine("Blinking");
+            }
+            else
+            {
+                yield return new WaitForSeconds(.4f);
+                plane.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap",eyesOpened);
+                isEyesOpened=true;
+                StartCoroutine("Blinking");
+            }
+        }
+    }
+    public void TurnIntoMonster()
+    {
+        isClicked=true;
+        plane.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap",MonsterFace);
+    }
+    public void Scared()
+    {
+        plane.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap",scaryFace);
+
+    }
 }

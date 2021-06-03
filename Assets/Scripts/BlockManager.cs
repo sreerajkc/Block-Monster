@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 public class BlockManager : MonoBehaviour
 {
     [SerializeField] Texture eyesClosed,Excited,MonsterFace,scaryFace;
@@ -27,11 +27,19 @@ public class BlockManager : MonoBehaviour
     }
     private void OnMouseEnter() 
     {
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         animator.SetTrigger("isOver");
         isMouseExit=false;
     }
     private void OnMouseOver() 
     {
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         if(!isClicked)
         {
             plane.GetComponent<MeshRenderer>().material.SetTexture("_BaseMap",Excited);
@@ -39,6 +47,10 @@ public class BlockManager : MonoBehaviour
     }
     private void OnMouseExit()
     {
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         isMouseExit=true;
         StartCoroutine("Blinking");
     }

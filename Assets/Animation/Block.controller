@@ -18,14 +18,10 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 8199525622416687876}
     m_Position: {x: 310, y: -90, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 4257746985139970781}
-    m_Position: {x: 310, y: -10, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 8802065231296100625}
   - {fileID: -5987263125694647012}
-  - {fileID: 3814999613043551440}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
@@ -80,7 +76,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: isDead
+  - m_Name: Died
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0

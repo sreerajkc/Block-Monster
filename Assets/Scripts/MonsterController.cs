@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MonsterController : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class MonsterController : MonoBehaviour
     }
    private void OnMouseDown()
     {
+        AudioManager.instance.audioSource.PlayOneShot(AudioManager.instance.monsterLaugh);
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         StartCoroutine(TurnIntoMonsterTime());
         EnemyMove();
         blockManager.TurnIntoMonster();
@@ -67,6 +73,7 @@ public class MonsterController : MonoBehaviour
            hitObjPos=hit.collider.transform.position;
            hit.collider.GetComponent<BlockManager>().Scared();
            hit.collider.GetComponent<BlockManager>().enabled=false;
+           GameManager.instance.AliveCheck();
            StartCoroutine("Die",hit);
            return isHit;
        }

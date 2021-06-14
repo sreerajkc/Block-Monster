@@ -1993,7 +1993,7 @@ MonoBehaviour:
   inGameUI: {fileID: 2629685472484023518}
   gameOver: {fileID: 4632171191441450728}
   winScreen: {fileID: 1043113131}
-  completed: {fileID: 0}
+  completed: {fileID: 1551018350}
   monsterNo: {fileID: 8819107716195246282}
   savedNo: {fileID: 512578201809457967}
   levelNo: {fileID: 13551549}

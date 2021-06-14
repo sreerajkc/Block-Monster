@@ -74,9 +74,9 @@ public class GameManager : MonoBehaviour
             uiManager.GameOver();
         }
     }
-    void ChangeLevel()
+    public void ChangeLevel()
     {
-        if(SceneManager.GetActiveScene().buildIndex <= SceneManager.sceneCount)
+        if(SceneManager.GetActiveScene().buildIndex <= SceneManager.sceneCountInBuildSettings)
         {
             uiManager.Win();
             PlayerPrefs.SetInt("CurrentLevel",SceneManager.GetActiveScene().buildIndex);

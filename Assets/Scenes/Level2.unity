@@ -285,7 +285,7 @@ MonoBehaviour:
   offSet: {x: 2, y: 0, z: 2}
   width: 4
   height: 4
-  monsterCount: 6
+  monsterCount: 4
   friendsToSave: 7
   currentlyAlive: 0
   blocks:

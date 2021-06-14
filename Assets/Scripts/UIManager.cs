@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameObject mainMenu,levelMenu,pauseMenu,inGameUI,gameOver,winScreen,completed;
+    [SerializeField] GameObject mainMenu,levelMenu,pauseMenu,inGameUI,gameOver,winScreen,completed,backButton;
     [SerializeField] TextMeshProUGUI monsterNo,savedNo,levelNo;
     [SerializeField] GameObject[] levels;
 
@@ -45,6 +45,10 @@ public class UIManager : MonoBehaviour
     {
         inGameUI.SetActive(false);
         pauseMenu.SetActive(true);
+        if(levelMenu.activeInHierarchy)
+        {
+            levelMenu.SetActive(false);
+        }
     }
     public void GameOver()
     {
@@ -82,8 +86,13 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(levelIndex);
         
     }
-    public void ShowLevel()
+    public void ShowLevel(bool isOnPauseMenu)
     {
+        if(isOnPauseMenu)
+        {
+            backButton.SetActive(true);
+            levelMenu.GetComponent<Image>().color=new Vector4(0,0,0,.9f);
+        }
         pauseMenu.SetActive(false);
         levelMenu.SetActive(true);
     }

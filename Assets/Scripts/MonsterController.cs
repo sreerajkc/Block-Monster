@@ -17,7 +17,7 @@ public class MonsterController : MonoBehaviour
    private void OnMouseDown()
     {
         AudioManager.instance.audioSource.PlayOneShot(AudioManager.instance.monsterLaugh);
-        if(EventSystem.current.IsPointerOverGameObject())
+        if(IsPointerOverUIObject())
         {
             return;
         }
@@ -95,5 +95,13 @@ public class MonsterController : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         isGoingToEat=true;
    }
+   private bool IsPointerOverUIObject() 
+   {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
+    }
    
 }

@@ -2,24 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameObject mainMenu,pauseMenu,inGameUI,gameOver,winScreen,completed;
+    [SerializeField] GameObject mainMenu,levelMenu,pauseMenu,inGameUI,gameOver,winScreen,completed;
     [SerializeField] TextMeshProUGUI monsterNo,savedNo,levelNo;
+    [SerializeField] GameObject[] levels;
 
+    private void Start() 
+    {
+        for(int i=0;i<levels.Length;i++)
+        {
+            if(i<PlayerPrefs.GetInt("CurrentLevel"))
+            {
+                levels[i].GetComponent<LevelUImanager>().tick.enabled=true;
+            }
+            else if(i>PlayerPrefs.GetInt("CurrentLevel") )
+            {
+                levels[i].GetComponent<Button>().interactable=false;
+                levels[i].GetComponent<LevelUImanager>().levelNo.color=new Vector4(0.9960784f,0.8235294f,.2470588f,.20f);
+            }
+        }
+    }
     public void Play()
     {
-        int currentLevelIndex=PlayerPrefs.GetInt("CurrentLevel");
-        if(currentLevelIndex==0)
-        {
-            SceneManager.LoadScene(1);
-        }
-        else
-        {
-            SceneManager.LoadScene(currentLevelIndex);
-        }
-        
+        levelMenu.SetActive(true);
         mainMenu.SetActive(false);
         pauseMenu.SetActive(false);
     }
@@ -33,7 +41,7 @@ public class UIManager : MonoBehaviour
         inGameUI.SetActive(true);
         pauseMenu.SetActive(false);
     }
-    void Pause()
+    public void Pause()
     {
         inGameUI.SetActive(false);
         pauseMenu.SetActive(true);
@@ -69,12 +77,15 @@ public class UIManager : MonoBehaviour
     {
         levelNo.text=currentLevel.ToString();
     }
-    private void Update() 
+    public void LevelSelect(int levelIndex)
     {
-        if(Input.GetKeyDown(KeyCode.Escape) && !mainMenu.activeInHierarchy)
-        {
-            Pause();
-        }
+        SceneManager.LoadScene(levelIndex);
+        
+    }
+    public void ShowLevel()
+    {
+        pauseMenu.SetActive(false);
+        levelMenu.SetActive(true);
     }
 
 }
